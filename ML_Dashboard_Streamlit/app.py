@@ -72,6 +72,26 @@ def main():
             plot_metrics(metrix)
 
 
+    if classifier == 'Logistic Regression':
+        st.sidebar.subheader("Model Hyperparameters")
+        C = st.sidebar.number_input("C (Regularization parameter)", 0.01, 10.0, step=0.1, key='C_LR')
+        max_iter = st.sidebar.slider("Maximum number of iteration", 100, 500, key='max_iter')
+
+        metrix = st.sidebar.multiselect("Select the metrics you want to plot.", ('Confusion Metrix', 'ROC Curve', 'Precision-Recall Curve'))
+
+        if st.sidebar.button("Classify", key='classify'):
+            st.subheader("Logistic Regression Results")
+            model = LogisticRegression(C=C, max_iter=max_iter)
+            model.fit(x_train, y_train)
+            accuracy = model.score(x_test, y_test)
+            y_pred = model.predict(x_test)
+            st.write("Accuracy", accuracy.round(2))
+            st.write("Precision", precision_score(y_test, y_pred, labels=class_names).round(2))
+            st.write("Recall", recall_score(y_test, y_pred, labels=class_names).round(2))
+            plot_metrics(metrix)
+
+
+
 
 
 
