@@ -49,9 +49,27 @@ def main():
     df = load_data()
     x_train, x_test, y_train, y_test = split(df)
     class_names = ['edible', 'poisonous']
+    st.sidebar.subheader("Choose Classifier")
+    classifier = st.sidebar.selectbox("Classifier", ("Support Vector Machine (SVM)", "Logistic Regression", "Random Forest Classifier"))
 
+    if classifier == 'Support Vector Machine (SVM)':
+        st.sidebar.subheader("Model Hyperparameters")
+        C = st.sidebar.number_input("C (Regularization parameter)", 0.01, 10.0, step=0.1, key='C')
+        kernel = st.sidebar.radio("Kernel", ("rbf", "linear"), key='kernel')
+        gamma = st.sidebar.radio("Gamma (Kernel Coefficient)", ("scale", "auto"), key='gamma')
 
+        metrix = st.sidebar.multiselect("Select the metrics you want to plot.", ('Confusion Metrix', 'ROC Curve', 'Precision-Recall Curve'))
 
+        if st.sidebar.button("Classify", key='classify'):
+            st.subheader("Support Vector Machine Results")
+            model = SVC(C=C, kernel=kernel, gamma=gamma)
+            model.fit(x_train, y_train)
+            accuracy = model.score(x_test, y_test)
+            y_pred = model.predict(x_test)
+            st.write("Accuracy", accuracy.round(2))
+            st.write("Precision", precision_score(y_test, y_pred, labels=class_names).round(2))
+            st.write("Recall", recall_score(y_test, y_pred, labels=class_names).round(2))
+            plot_metrics(metrix)
 
 
 
