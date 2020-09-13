@@ -48,6 +48,7 @@ def main():
 
     df = load_data()
     x_train, x_test, y_train, y_test = split(df)
+    df = load_data()
     class_names = ['edible', 'poisonous']
     st.sidebar.subheader("Choose Classifier")
     classifier = st.sidebar.selectbox("Classifier", ("Support Vector Machine (SVM)", "Logistic Regression", "Random Forest Classifier"))
@@ -82,6 +83,26 @@ def main():
         if st.sidebar.button("Classify", key='classify'):
             st.subheader("Logistic Regression Results")
             model = LogisticRegression(C=C, max_iter=max_iter)
+            model.fit(x_train, y_train)
+            accuracy = model.score(x_test, y_test)
+            y_pred = model.predict(x_test)
+            st.write("Accuracy", accuracy.round(2))
+            st.write("Precision", precision_score(y_test, y_pred, labels=class_names).round(2))
+            st.write("Recall", recall_score(y_test, y_pred, labels=class_names).round(2))
+            plot_metrics(metrix)
+
+    if classifier == 'Random Forest Classifier':
+        st.sidebar.subheader("Model Hyperparameters")
+        n_estimators = st.sidebar.number_input("Number of Decision Trees to be used", 100, 5000, step=10, key='n_estimators')
+        max_depth = st.sidebar.number_input("Depth of the Trees that will be used in the Forest", 1, 20, step=1, key='max_depth')
+        bootstrap = st.sidebar.radio("Bootstrap samples while building trees", ('True', 'False'), key='bootstrap')
+
+
+        metrix = st.sidebar.multiselect("Select the metrics you want to plot.", ('Confusion Metrix', 'ROC Curve', 'Precision-Recall Curve'))
+
+        if st.sidebar.button("Classify", key='classify'):
+            st.subheader("Random Forest Classifier Results")
+            model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, bootstrap=bootstrap)
             model.fit(x_train, y_train)
             accuracy = model.score(x_test, y_test)
             y_pred = model.predict(x_test)
