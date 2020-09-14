@@ -10,10 +10,10 @@ from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precisio
 from sklearn.metrics import precision_score, recall_score
 
 def main():
-    st.title("Binary Classification Web App")
+    st.title("Classification of Edible and Poisonous Mushrooms 🍄")
     st.sidebar.title("Interaction area")
-    st.markdown("are your mushrooms edible or poisonous? 🍄")
-    st.sidebar.markdown("are your mushrooms edible or poisonous? 🍄")
+    st.markdown("Use ML algorithms to check whether mushrooms are edible or poisonous? 🍄")
+    st.sidebar.markdown("Select the Model and their Hyperparameters, and click on Classify button to see the results.")
 
     @st.cache(persist=True)
     def load_data():
@@ -50,7 +50,14 @@ def main():
     x_train, x_test, y_train, y_test = split(df)
     df = load_data()
     class_names = ['edible', 'poisonous']
-    st.sidebar.subheader("Choose Classifier")
+
+    st.sidebar.subheader("View Dataset")
+    if st.sidebar.checkbox("Show raw data", False):
+        st.subheader("Mushroom dataset for Classification")
+        st.write(df)
+
+
+    st.sidebar.subheader("Choose Classifier from the Dropdown option")
     classifier = st.sidebar.selectbox("Classifier", ("Support Vector Machine (SVM)", "Logistic Regression", "Random Forest Classifier"))
 
     if classifier == 'Support Vector Machine (SVM)':
@@ -59,7 +66,7 @@ def main():
         kernel = st.sidebar.radio("Kernel", ("rbf", "linear"), key='kernel')
         gamma = st.sidebar.radio("Gamma (Kernel Coefficient)", ("scale", "auto"), key='gamma')
 
-        metrix = st.sidebar.multiselect("Select the metrics you want to plot.", ('Confusion Metrix', 'ROC Curve', 'Precision-Recall Curve'))
+        metrix = st.sidebar.multiselect("Select the metrics you want to plot (You can choose more than one)", ('Confusion Metrix', 'ROC Curve', 'Precision-Recall Curve'))
 
         if st.sidebar.button("Classify", key='classify'):
             st.subheader("Support Vector Machine Results")
@@ -117,9 +124,6 @@ def main():
 
 
 
-    if st.sidebar.checkbox("Show raw data", False):
-        st.subheader("Mushroom dataset for Classification")
-        st.write(df)
 
 
 
