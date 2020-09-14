@@ -17,7 +17,7 @@ def main():
 
     @st.cache(persist=True)
     def load_data():
-        data = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/ML_Dashboard_Streamlit/mushrooms.csv')
+        data = pd.read_csv('mushrooms.csv')
         label = LabelEncoder()
         for each_col in data.columns:
             data[each_col] = label.fit_transform(data[each_col])
