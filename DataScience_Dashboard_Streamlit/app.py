@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sodapy import Socrata
 import pydeck as pdk
+import plotly.express as px
 
 client = Socrata("data.cityofnewyork.us", None)
 DATA_URL = client.get("h9gi-nx95", limit=100)
@@ -52,10 +53,29 @@ st.write(pdk.Deck(
         "zoom": 11,
         "pitch":50,
     },
+    layers=[
+        pdk.Layer(
+        "HexagonLayer",
+        data=data[['crash_time', 'latitude', 'longitude']],
+        get_position=['longitude', 'latitude'],
+        radius=100,
+        extruded=True,
+        pickable=True,
+        elevation_scale=4,
+        elevation_range = [0, 1000],
+        ),
+    ],
 ))
 
+st.subheader("Breakdown by minute b/w %i:00 and %i:00" % (hour, (hour+1) %24))
+filtered = data[
+    (data['crash_time'].dt.hour >= hour) & (data['crash_time'].dt.hour < (hour+1))
 
-
+]
+hist = np.histogram(filtered['crash_time'].dt.minute, bins=60, range=(0,60))[0]
+chart_data = pd.DataFrame({'minute': range(0,60), 'crashes':hist})
+fig = px.bar(chart_data, x='minute', y='crashes', hover_data=['minute', 'crashes'], height=400)
+st.write(fig)
 
 
 
