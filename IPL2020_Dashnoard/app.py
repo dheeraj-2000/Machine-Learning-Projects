@@ -55,11 +55,11 @@ if select_bat_bowl == 'Batting stats':
 
     data_batting_stats = load_data_batting_table()
 
-    if st.checkbox("Show Top 30 Batsman List (in terms of Total Runs Scored)", False):
+    if st.checkbox("Show Top 20 Batsman List (in terms of Total Runs Scored)", False):
         st.header("Batting Stats of top Players")
-        st.write(data_batting_stats.head(30))
+        st.write(data_batting_stats.head(20))
 
-    st.subheader("Check Top 3 Batsman in Selective categories")
+    st.subheader("Check Top 3 Best Batsman in Selective categories")
     select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Run Scorer', 'Highest Strike Rate', 'Best Average'])
 
     if select_category == 'Top Run Scorer':
@@ -76,13 +76,13 @@ if select_bat_bowl == 'Batting stats':
                             legend_title="Players",
                             font=dict(
                                 family="Arial",
-                                size=18,
+                                size=16,
                                 color="RebeccaPurple"
                             ))
 
         fig.update_layout(title={'text': "Top 3 Most run scorer Batsman",
                                     'y':0.95,
-                                    'x':0.45,
+                                    'x':0.43,
                                     'xanchor': 'center',
                                     'yanchor': 'top'})
 
@@ -101,13 +101,13 @@ if select_bat_bowl == 'Batting stats':
                             legend_title="Players",
                             font=dict(
                                 family="Arial",
-                                size=18,
+                                size=16,
                                 color="RebeccaPurple"
                             ))
 
         fig2.update_layout(title={'text': "Top 3 Batsman with Highest Strike Rate)",
                                     'y':0.95,
-                                    'x':0.45,
+                                    'x':0.43,
                                     'xanchor': 'center',
                                     'yanchor': 'top'})
 
@@ -153,3 +153,37 @@ if select_bat_bowl == 'Batting stats':
                                     'yanchor': 'top'})
 
         st.write(fig2)
+
+
+##############################################################################################################################
+#####################          Bowling
+
+bowling_stats_data_url = 'https://www.iplt20.com/stats/2020/most-wickets'
+# most_run_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
+html = requests.get(bowling_stats_data_url).content
+df_list_bowling_stat = pd.read_html(html)
+df_bowling_stat = df_list_bowling_stat[-1]
+
+
+if select_bat_bowl == 'Bowling stats':
+
+    @st.cache(persist=True)
+    def load_data_bowling_table():
+        data = pd.DataFrame(df_bowling_stat)
+        data.rename(columns={'POS':'Position.',	'PLAYER': 'Player',	'Mat': 'Matches','Inns': 'Innings',	'Ov':'Overs','Wkts': 'Wickets taken',
+        	                           'BBI': 'Best Bowling in a Inns',	'Avg': 'Average',	'Econ': 'Economy Rate', 'SR': 'Strike Rate'	}, inplace=True)
+        # data = data.replace(np.nan, 'Not Played yet')
+        return data
+
+    data_bowling_stats = load_data_bowling_table()
+
+    if st.checkbox("Show Top 20 Bowlers List (in terms of Total number of wickets taken)", False):
+        st.header("Bowling Stats of top Players")
+        st.write(data_bowling_stats.head(20))
+
+    st.subheader("Check Top 3 Best Bowlers in Selective categories")
+    select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Wicket Taker', 'Best Economy Rate', 'Best Average'])
+
+
+
+st.sidebar.title("Check Stats of Your Favourite Team")
