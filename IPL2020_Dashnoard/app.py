@@ -55,12 +55,12 @@ if select_bat_bowl == 'Batting stats':
 
     data_batting_stats = load_data_batting_table()
 
-    if st.checkbox("Show Top 20 Batsman List", False):
+    if st.checkbox("Show Top 30 Batsman List", False):
         st.header("Batting Stats of top Players")
-        st.write(data_batting_stats)
+        st.write(data_batting_stats.head(30))
 
     st.subheader("Choose the category")
-    select_category = st.selectbox('Check the Batsman with Highest?', ['--Select--', 'Total Score', 'Strike Rate', 'Score in a match'])
+    select_category = st.selectbox('Check the Batsman with Highest?', ['--Select--', 'Total Score', 'Strike Rate', 'Average Score'])
 
     if select_category == 'Total Score':
         df_bat_total_score = data_batting_stats.sort_values(by=['Runs'], ascending=False).head(3)
@@ -69,9 +69,7 @@ if select_bat_bowl == 'Batting stats':
 
         data_batting_stats_new = df_bat_total_score[['Position', 'Player', 'Runs']].head(3)
 
-        fig = px.bar(data_batting_stats_new, x='Player', y='Runs', hover_data=['Position','Player', 'Runs'], color='Player',
-                        # color_discrete_map={"orange":"orangered", "blue":"lightblue", "green": "green"},
-                         height=700, width=800)
+        fig = px.bar(data_batting_stats_new, x='Player', y='Runs', hover_data=['Position','Player', 'Runs'], color='Player')
 
         fig.update_layout(xaxis_title="Batsman",
                             yaxis_title="Runs Scored",
@@ -96,9 +94,7 @@ if select_bat_bowl == 'Batting stats':
         df_bat_sr['Position'] = x
         data_batting_stats_sr = df_bat_sr[['Position', 'Player', 'Strike Rate']].head(3)
 
-        fig2 = px.bar(data_batting_stats_sr, x='Player', y='Strike Rate', hover_data=['Position','Player', 'Strike Rate'], color='Player',
-                        # color_discrete_map={"orange":"orangered", "blue":"lightblue", "green": "green"},
-                         height=700, width=800)
+        fig2 = px.bar(data_batting_stats_sr, x='Player', y='Strike Rate', hover_data=['Position','Player', 'Strike Rate'], color='Player')
 
         fig2.update_layout(xaxis_title="Batsman",
                             yaxis_title="Strike Rate",
@@ -110,6 +106,47 @@ if select_bat_bowl == 'Batting stats':
                             ))
 
         fig2.update_layout(title={'text': "Top 3 Batsman (Highest Strike Rate)",
+                                    'y':0.95,
+                                    'x':0.45,
+                                    'xanchor': 'center',
+                                    'yanchor': 'top'})
+
+        st.write(fig2)
+
+    elif select_category == 'Average Score':
+        best_avg_data_url = 'https://www.iplt20.com/stats/2020/best-batting-average'
+        # most_run_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
+        html = requests.get(best_avg_data_url).content
+        df_list_avg = pd.read_html(html)
+        df_batting_stat_best_avg = df_list_avg[-1]
+
+        @st.cache(persist=True)
+        def load_data_batting_table():
+            data = pd.DataFrame(df_batting_stat_best_avg)
+            data.rename(columns={'PLAYER':'Player', 'Avg': 'Average'}, inplace=True)
+            # data = data.replace(np.nan, 'Not Played yet')
+            return data
+
+        data_best_avg_stats = load_data_batting_table()
+
+
+        df_bat_bestavg = data_best_avg_stats.sort_values(by=['Average'], ascending=False).head(3)
+        x = np.arange(1, 4)
+        df_bat_bestavg['Position'] = x
+        data_batting_stats_bestavg = df_bat_bestavg[['Position', 'Player', 'Average']].head(3)
+
+        fig2 = px.bar(data_batting_stats_bestavg, x='Player', y='Average', hover_data=['Position','Player', 'Average'], color='Player')
+
+        fig2.update_layout(xaxis_title="Batsman",
+                            yaxis_title="Highest Avg",
+                            legend_title="Players",
+                            font=dict(
+                                family="Arial",
+                                size=18,
+                                color="RebeccaPurple"
+                            ))
+
+        fig2.update_layout(title={'text': "Top 3 Batsman (Highest Indivdual Score in a Match)",
                                     'y':0.95,
                                     'x':0.45,
                                     'xanchor': 'center',
