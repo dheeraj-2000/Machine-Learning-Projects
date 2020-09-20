@@ -16,7 +16,7 @@ df_points_table = df_list_points_table[-1]
 
 
 st.title("IPL 2020 Dashboard")
-st.markdown("You can check the current Status of **IPL 2020** along with various stats of your favourite team 🏏")
+st.markdown("You can check latest Status of **IPL 2020** along with various other stats of your favourite team 🏏")
 
 @st.cache(persist=True)
 def load_data_point_table():
@@ -27,7 +27,7 @@ def load_data_point_table():
 
 
 data_point_table = load_data_point_table()
-st.header("Points Table IPL 2020")
+st.header("Points Table of IPL 2020")
 st.write(data_point_table)
 
 # Batting & Bowling stats of all team
@@ -40,8 +40,8 @@ df_batting_stat = df_list_batting_stat[-1]
 
 
 
-st.header("Check Stats considering all Teams")
-select_bat_bowl = st.selectbox('Which stats you want to check?', ['Batting stats', 'Bowling stats'])
+st.header("Check Top Performers of Ongoing IPL Season")
+select_bat_bowl = st.selectbox('Which stats you want to check?', ['--Select--', 'Batting stats', 'Bowling stats'])
 
 if select_bat_bowl == 'Batting stats':
 
@@ -55,14 +55,14 @@ if select_bat_bowl == 'Batting stats':
 
     data_batting_stats = load_data_batting_table()
 
-    if st.checkbox("Show Top 30 Batsman List", False):
+    if st.checkbox("Show Top 30 Batsman List (in terms of Total Runs Scored)", False):
         st.header("Batting Stats of top Players")
         st.write(data_batting_stats.head(30))
 
-    st.subheader("Choose the category")
-    select_category = st.selectbox('Check the Batsman with Highest?', ['--Select--', 'Total Score', 'Strike Rate', 'Average Score'])
+    st.subheader("Check Top 3 Batsman in Selective categories")
+    select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Run Scorer', 'Highest Strike Rate', 'Best Average'])
 
-    if select_category == 'Total Score':
+    if select_category == 'Top Run Scorer':
         df_bat_total_score = data_batting_stats.sort_values(by=['Runs'], ascending=False).head(3)
         x = np.arange(1, 4)
         df_bat_total_score['Position'] = x
@@ -72,7 +72,7 @@ if select_bat_bowl == 'Batting stats':
         fig = px.bar(data_batting_stats_new, x='Player', y='Runs', hover_data=['Position','Player', 'Runs'], color='Player')
 
         fig.update_layout(xaxis_title="Batsman",
-                            yaxis_title="Runs Scored",
+                            yaxis_title="Total Runs Scored",
                             legend_title="Players",
                             font=dict(
                                 family="Arial",
@@ -80,7 +80,7 @@ if select_bat_bowl == 'Batting stats':
                                 color="RebeccaPurple"
                             ))
 
-        fig.update_layout(title={'text': "Top 3 Batsman (Most run scorer)",
+        fig.update_layout(title={'text': "Top 3 Most run scorer Batsman",
                                     'y':0.95,
                                     'x':0.45,
                                     'xanchor': 'center',
@@ -88,7 +88,7 @@ if select_bat_bowl == 'Batting stats':
 
         st.write(fig)
 
-    elif select_category == 'Strike Rate':
+    elif select_category == 'Highest Strike Rate':
         df_bat_sr = data_batting_stats.sort_values(by=['Strike Rate'], ascending=False).head(3)
         x = np.arange(1, 4)
         df_bat_sr['Position'] = x
@@ -105,7 +105,7 @@ if select_bat_bowl == 'Batting stats':
                                 color="RebeccaPurple"
                             ))
 
-        fig2.update_layout(title={'text': "Top 3 Batsman (Highest Strike Rate)",
+        fig2.update_layout(title={'text': "Top 3 Batsman with Highest Strike Rate)",
                                     'y':0.95,
                                     'x':0.45,
                                     'xanchor': 'center',
@@ -113,7 +113,7 @@ if select_bat_bowl == 'Batting stats':
 
         st.write(fig2)
 
-    elif select_category == 'Average Score':
+    elif select_category == 'Best Average':
         best_avg_data_url = 'https://www.iplt20.com/stats/2020/best-batting-average'
         # most_run_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
         html = requests.get(best_avg_data_url).content
@@ -138,17 +138,17 @@ if select_bat_bowl == 'Batting stats':
         fig2 = px.bar(data_batting_stats_bestavg, x='Player', y='Average', hover_data=['Position','Player', 'Average'], color='Player')
 
         fig2.update_layout(xaxis_title="Batsman",
-                            yaxis_title="Highest Avg",
+                            yaxis_title="Best Average",
                             legend_title="Players",
                             font=dict(
                                 family="Arial",
-                                size=18,
+                                size=16,
                                 color="RebeccaPurple"
                             ))
 
-        fig2.update_layout(title={'text': "Top 3 Batsman (Highest Indivdual Score in a Match)",
+        fig2.update_layout(title={'text': "Top 3 Batsman with Best Average",
                                     'y':0.95,
-                                    'x':0.45,
+                                    'x':0.42,
                                     'xanchor': 'center',
                                     'yanchor': 'top'})
 
