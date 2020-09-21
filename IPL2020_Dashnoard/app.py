@@ -17,8 +17,12 @@ df_points_table = df_list_points_table[-1]
 # df = pd.DataFrame(df)
 
 
-st.title("IPL 2020 Dashboard")
+# st.title("IPL 2020 Dashboard")
+st.markdown("<h1 style='text-align: center; color: #9C021B;'><strong>IPL 2020 Dashboard</strong></h1>", unsafe_allow_html=True)
+
 st.markdown("You can check latest Status of **IPL 2020** along with various other stats of your favourite team 🏏")
+st.markdown("&nbsp")
+# st.markdown("&nbsp")
 
 @st.cache(persist=True)
 def load_data_point_table():
@@ -29,7 +33,9 @@ def load_data_point_table():
 
 
 data_point_table = load_data_point_table()
-st.header("Points Table of IPL 2020")
+# st.header("Points Table of IPL 2020")
+st.markdown("<h2 style='text-align: center; color: blue;'><strong>Points Table of IPL 2020</strong></h2>", unsafe_allow_html=True)
+
 st.write(data_point_table)
 
 
@@ -42,8 +48,11 @@ df_batting_stat = df_list_batting_stat[-1]
 # print(df)
 
 
+st.markdown("&nbsp")
+# st.markdown("&nbsp")
+# st.header("Check Top Performers of Ongoing IPL Season")
+st.markdown("<h2 style='text-align: center; color: green;'><strong>Check Top Performers of Ongoing IPL Season</strong></h2>", unsafe_allow_html=True)
 
-st.header("Check Top Performers of Ongoing IPL Season")
 select_bat_bowl = st.selectbox('Which stats you want to check?', ['--Select--', 'Batting stats', 'Bowling stats'])
 
 if select_bat_bowl == 'Batting stats':
@@ -59,10 +68,14 @@ if select_bat_bowl == 'Batting stats':
     data_batting_stats = load_data_batting_table()
 
     if st.checkbox("Show Top 20 Batsman List (in terms of Total Runs Scored)", False):
-        st.header("Batting Stats of top Players")
+        # st.header("Batting Stats of top Players")
+        st.markdown("<h3 style='text-align: center; color: #4BC401;'><strong>Batting Stats of top Players</strong></h3>", unsafe_allow_html=True)
+
         st.write(data_batting_stats.head(20))
 
-    st.subheader("Check Top 3 Best Batsman in Selective categories")
+    # st.subheader("Check Top 3 Best Batsman in Selective categories")
+    st.markdown("<h3 style='text-align: center; color: orangered;'><strong>Check Top 3 Best Batsman in Selective categories</strong></h3>", unsafe_allow_html=True)
+
     select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Run Scorer', 'Highest Strike Rate', 'Best Average'])
 
     if select_category == 'Top Run Scorer':
@@ -187,10 +200,14 @@ if select_bat_bowl == 'Bowling stats':
     data_bowling_stats = load_data_bowling_table()
 
     if st.checkbox("Show Top 20 Bowlers List (in terms of Total number of wickets taken)", False):
-        st.header("Bowling Stats of top Players")
+        # st.header("Bowling Stats of top Players")
+        st.markdown("<h3 style='text-align: center; color: #4BC401;'><strong>Bowling Stats of top Players</strong></h3>", unsafe_allow_html=True)
+
         st.write(data_bowling_stats.head(20))
 
-    st.subheader("Check Top 3 Best Bowlers in Selective categories")
+    # st.subheader("Check Top 3 Best Bowlers in Selective categories")
+    st.markdown("<h3 style='text-align: center; color: purple;'><strong>Check Top 3 Best Bowlers in Selective categories</strong></h3>", unsafe_allow_html=True)
+
     select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Wicket Taker', 'Best Economy Rate', 'Best Bowling Average'])
 
 ######################################### !st category
@@ -304,9 +321,14 @@ if select_bat_bowl == 'Bowling stats':
 
 
 
-st.sidebar.title("Schedule of IPL 2020")
+# st.sidebar.title("Schedule of IPL 2020")
+st.sidebar.markdown("<h1 style='text-align: center; color: #F34600;'><strong>Schedule of IPL 2020</strong></h1>", unsafe_allow_html=True)
+
 st.sidebar.markdown("You can check the scheduled matches of IPL 2020, along with various other details like timing, Venue etc.")
 
+
+st.sidebar.markdown("&nbsp")
+# st.sidebar.markdown("&nbsp")
 st.sidebar.subheader("Want to check all scheduled Matches?")
 
 if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
@@ -326,7 +348,8 @@ if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
 
     # st.table(imag.assign(hack='').set_index('hack').head(all_match))
 
-
+st.sidebar.markdown("&nbsp")
+# st.sidebar.markdown("&nbsp")
 st.sidebar.subheader("Want to check scheduled Matches of your favourite team?")
 
 favourite_team = st.sidebar.selectbox("Which's your favourite team?", ['--Select--', 'Chennai Super Kings (CSK)', 'Mumbai Indians (MI)', 'Royal Challengers Benglore (RCB)', 'Sunrisers Hyderabad (SRH)', 'Delhi Capitals (DC)', 'Kings Eleven Punjab (KXIP)', 'Rajasthan Royals (RR)', 'Kolkata knight Riders (KKR)'])
@@ -390,7 +413,7 @@ elif favourite_team == 'Kings Eleven Punjab (KXIP)':
     st.table(punjab.assign(hack='').set_index('hack'))
 
 elif favourite_team == 'Rajasthan Royals (RR)':
-    rr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rr_schedule.csv')
+    rr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rajasthan_schedule.csv')
     rr= rr[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
     st.markdown("&nbsp")
