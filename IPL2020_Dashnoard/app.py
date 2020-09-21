@@ -304,17 +304,103 @@ if select_bat_bowl == 'Bowling stats':
 
 
 
-st.sidebar.title("Which's Your Favourite Team")
+st.sidebar.title("Schedule of IPL 2020")
+st.sidebar.markdown("You can check the scheduled matches of IPL 2020, along with various other details like timing, Venue etc.")
 
-if st.sidebar.checkbox("Show cskfixture", False):
+st.sidebar.subheader("Want to check all scheduled Matches?")
+
+if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("IPL 2020 Scheduled Matches")
+    st.markdown("You can expand the view for better visibility of Time table")
     # st.header("Bowling Stats of top Players")
-    hour = st.sidebar.slider("How many scheduled matches you want to check?", 0, 60)
-    image = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/iplschedule.csv')
+    all_match = st.sidebar.slider("Adjust the slider if you want to check more Scheduled Matches?", 20, 60)
+    image = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/ipl_schedule.csv')
     # st.image(image, use_column_width=True)
     imag= image[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     # imag = imag.style.hide_index()
     # imag.set_index('column', inplace=True)
-    # st.write(image)
+    st.write(image.head(all_match))
 
 
-    st.table(imag.assign(hack='').set_index('hack').head(hour))
+    # st.table(imag.assign(hack='').set_index('hack').head(all_match))
+
+
+st.sidebar.subheader("Want to check scheduled Matches of your favourite team?")
+
+favourite_team = st.sidebar.selectbox("Which's your favourite team?", ['--Select--', 'Chennai Super Kings (CSK)', 'Mumbai Indians (MI)', 'Royal Challengers Benglore (RCB)', 'Sunrisers Hyderabad (SRH)', 'Delhi Capitals (DC)', 'Kings Eleven Punjab (KXIP)', 'Rajasthan Royals (RR)', 'Kolkata knight Riders (KKR)'])
+
+
+
+if favourite_team == 'Chennai Super Kings (CSK)':
+    # @st.cache(persist=True)
+    csk = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/csk_schedule.csv')
+    # st.image(image, use_column_width=True)
+    csk= csk[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    # imag = imag.style.hide_index()
+    # imag.set_index('column', inplace=True)
+    # st.write(csk)
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Chennai Super Kings full Schedule of Matches")
+    st.table(csk.assign(hack='').set_index('hack'))
+
+
+
+#
+elif favourite_team == 'Mumbai Indians (MI)':
+    mi = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/mi_schedule.csv')
+    mi= mi[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Mumbai Indians full Schedule of Matches")
+    st.table(mi.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Royal Challengers Benglore (RCB)':
+    rcb = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rcb_schedule.csv')
+    rcb= rcb[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Royal Challengers Benglore full Schedule of Matches")
+    st.table(rcb.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Sunrisers Hyderabad (SRH)':
+    srh = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/srh_schedule.csv')
+    srh= srh[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Sunrisers Hyderabad full Schedule of Matches")
+    st.table(srh.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Delhi Capitals (DC)':
+    dc = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/dc_schedule.csv')
+    dc= dc[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Delhi Capitals full Schedule of Matches")
+    st.table(dc.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Kings Eleven Punjab (KXIP)':
+    punjab = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/punjab_schedule.csv')
+    punjab= punjab[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("RKings Eleven Punjab full Schedule of Matches")
+    st.table(punjab.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Rajasthan Royals (RR)':
+    rr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rr_schedule.csv')
+    rr= rr[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Rajasthan Royals full Schedule of Matches")
+    st.table(rr.assign(hack='').set_index('hack'))
+
+elif favourite_team == 'Kolkata knight Riders (KKR)':
+    kkr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/kkr_schedule.csv')
+    kkr= kkr[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    st.markdown("&nbsp")
+    st.markdown("&nbsp")
+    st.header("Kolkata knight Riders full Schedule of Matches")
+    st.table(kkr.assign(hack='').set_index('hack'))
