@@ -329,12 +329,16 @@ st.sidebar.markdown("You can check the scheduled matches of IPL 2020, along with
 
 st.sidebar.markdown("&nbsp")
 # st.sidebar.markdown("&nbsp")
-st.sidebar.subheader("Want to check all scheduled Matches?")
+# st.sidebar.subheader("Want to check all scheduled Matches?")
+st.sidebar.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong>Want to check all scheduled Matches?</strong></h2>", unsafe_allow_html=True)
+
 
 if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
     st.markdown("&nbsp")
     st.markdown("&nbsp")
-    st.header("IPL 2020 Scheduled Matches")
+    # st.header("IPL 2020 Scheduled Matches")
+    st.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong>Want to check all scheduled Matches?</strong></h2>", unsafe_allow_html=True)
+
     st.markdown("You can expand the view for better visibility of Time table")
     # st.header("Bowling Stats of top Players")
     all_match = st.sidebar.slider("Adjust the slider if you want to check more Scheduled Matches?", 20, 60)
@@ -350,7 +354,9 @@ if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
 
 st.sidebar.markdown("&nbsp")
 # st.sidebar.markdown("&nbsp")
-st.sidebar.subheader("Want to check scheduled Matches of your favourite team?")
+# st.sidebar.subheader("Want to check scheduled Matches of your favourite team?")
+st.sidebar.markdown("<h2 style='text-align: center; color: #5A2553;'><strong>Want to check scheduled Matches of your favourite team?</strong></h2>", unsafe_allow_html=True)
+
 
 favourite_team = st.sidebar.selectbox("Which's your favourite team?", ['--Select--', 'Chennai Super Kings (CSK)', 'Mumbai Indians (MI)', 'Royal Challengers Benglore (RCB)', 'Sunrisers Hyderabad (SRH)', 'Delhi Capitals (DC)', 'Kings Eleven Punjab (KXIP)', 'Rajasthan Royals (RR)', 'Kolkata knight Riders (KKR)'])
 
