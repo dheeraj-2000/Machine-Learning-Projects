@@ -5,6 +5,8 @@ from sodapy import Socrata
 import pydeck as pdk
 import plotly.express as px
 import requests
+from IPython.display import Image
+
 
 points_table_data_url = 'https://www.iplt20.com/points-table/2020'
 # most_run_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
@@ -29,6 +31,7 @@ def load_data_point_table():
 data_point_table = load_data_point_table()
 st.header("Points Table of IPL 2020")
 st.write(data_point_table)
+
 
 # Batting & Bowling stats of all team
 batting_stats_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
@@ -69,8 +72,9 @@ if select_bat_bowl == 'Batting stats':
 
         data_batting_stats_new = df_bat_total_score[['Position', 'Player', 'Runs']].head(3)
 
-        fig = px.bar(data_batting_stats_new, x='Player', y='Runs', hover_data=['Position','Player', 'Runs'], color='Player')
-
+        fig = px.bar(data_batting_stats_new, x='Player', y='Runs',text='Runs', hover_data=['Position','Player', 'Runs'], color='Player')
+        fig.update_traces(texttemplate='%{text:.s}', textposition='inside')
+        fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
         fig.update_layout(xaxis_title="Batsman",
                             yaxis_title="Total Runs Scored",
                             legend_title="Players",
@@ -94,8 +98,9 @@ if select_bat_bowl == 'Batting stats':
         df_bat_sr['Position'] = x
         data_batting_stats_sr = df_bat_sr[['Position', 'Player', 'Strike Rate']].head(3)
 
-        fig2 = px.bar(data_batting_stats_sr, x='Player', y='Strike Rate', hover_data=['Position','Player', 'Strike Rate'], color='Player')
-
+        fig2 = px.bar(data_batting_stats_sr, x='Player', y='Strike Rate',text='Strike Rate', hover_data=['Position','Player', 'Strike Rate'], color='Player')
+        fig2.update_traces(texttemplate='%{text:.4s}', textposition='inside')
+        fig2.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
         fig2.update_layout(xaxis_title="Batsman",
                             yaxis_title="Strike Rate",
                             legend_title="Players",
@@ -112,6 +117,8 @@ if select_bat_bowl == 'Batting stats':
                                     'yanchor': 'top'})
 
         st.write(fig2)
+        st.markdown("🤔💡 * **Batting Strike rate** is measure of runs per ball. It is calculated in **%** *")
+
 
     elif select_category == 'Best Average':
         best_avg_data_url = 'https://www.iplt20.com/stats/2020/best-batting-average'
@@ -135,8 +142,9 @@ if select_bat_bowl == 'Batting stats':
         df_bat_bestavg['Position'] = x
         data_batting_stats_bestavg = df_bat_bestavg[['Position', 'Player', 'Average']].head(3)
 
-        fig2 = px.bar(data_batting_stats_bestavg, x='Player', y='Average', hover_data=['Position','Player', 'Average'], color='Player')
-
+        fig2 = px.bar(data_batting_stats_bestavg, x='Player', y='Average',text='Average', hover_data=['Position','Player', 'Average'], color='Player')
+        fig2.update_traces(texttemplate='%{text:.4s}', textposition='inside')
+        fig2.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
         fig2.update_layout(xaxis_title="Batsman",
                             yaxis_title="Best Average",
                             legend_title="Players",
@@ -153,6 +161,7 @@ if select_bat_bowl == 'Batting stats':
                                     'yanchor': 'top'})
 
         st.write(fig2)
+        st.markdown("🤔💡 * **Batting average** is the **total number of runs** a batsman have scored divided by the **number of times** they have been out*")
 
 
 ##############################################################################################################################
@@ -192,7 +201,9 @@ if select_bat_bowl == 'Bowling stats':
 
         data_bowl_stats_top_wkt = df_bowl_top_wicket[['Position', 'Player', 'Wickets taken']].head(3)
 
-        fig = px.bar(data_bowl_stats_top_wkt, x='Player', y='Wickets taken', hover_data=['Position','Player', 'Wickets taken'], color='Player')
+        fig = px.bar(data_bowl_stats_top_wkt, x='Player', y='Wickets taken',text='Wickets taken', hover_data=['Position','Player', 'Wickets taken'], color='Player')
+        fig.update_traces(texttemplate='%{text:.s}', textposition='inside')
+        fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
 
         fig.update_layout(xaxis_title="Bowlers",
                             yaxis_title="Wickets taken so far",
@@ -219,7 +230,9 @@ if select_bat_bowl == 'Bowling stats':
 
             data_bowl_stats_best_er = df_bowl_best_er[['Position', 'Player', 'Economy Rate']].head(3)
 
-            fig = px.bar(data_bowl_stats_best_er, x='Player', y='Economy Rate', hover_data=['Position','Player', 'Economy Rate'], color='Player')
+            fig = px.bar(data_bowl_stats_best_er, x='Player', y='Economy Rate', text='Economy Rate', hover_data=['Position','Player', 'Economy Rate'], color='Player')
+            fig.update_traces(texttemplate='%{text:.4s}', textposition='inside')
+            fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
 
             fig.update_layout(xaxis_title="Bowlers",
                                 yaxis_title="Economy Rate",
@@ -237,6 +250,7 @@ if select_bat_bowl == 'Bowling stats':
                                         'yanchor': 'top'})
 
             st.write(fig)
+            st.markdown("🤔💡 * **Economy rate** is the number of runs a bowler have conceded per over bowled. The **lower** the economy rate is, the **better** the bowler is performing.*")
 
 
 
@@ -248,7 +262,10 @@ if select_bat_bowl == 'Bowling stats':
 
             data_bowl_stats_best_avg = df_bowl_best_avg[['Position', 'Player', 'Average']].head(3)
 
-            fig = px.bar(data_bowl_stats_best_avg, x='Player', y='Average', hover_data=['Position','Player', 'Average'], color='Player', width=750)
+            fig = px.bar(data_bowl_stats_best_avg, x='Player', y='Average',text='Average', hover_data=['Position','Player', 'Average'], color='Player', width=750)
+
+            fig.update_traces(texttemplate='%{text:.4s}', textposition='inside')
+            fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
 
             fig.update_layout(xaxis_title="Bowlers",
                                 yaxis_title="Average",
@@ -266,6 +283,12 @@ if select_bat_bowl == 'Bowling stats':
                                         'yanchor': 'top'})
 
             st.write(fig)
+            st.markdown("🤔💡 * **Bowling average** is the number of runs a bowler have conceded per wicket taken. The **lower** the bowling average is, the **better** the bowler is performing*")
+
+
+
+#########################################################################################################################################
+#########################################################################################################################################
 
 
 
@@ -281,9 +304,18 @@ if select_bat_bowl == 'Bowling stats':
 
 
 
+st.sidebar.title("Which's Your Favourite Team")
 
-
-
-
-
-st.sidebar.title("Check Stats of Your Favourite Team")
+if st.sidebar.checkbox("Show cskfixture", False):
+    # st.header("Bowling Stats of top Players")
+    image = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/csk_.csv')
+    # st.image(image, use_column_width=True)
+    imag= image[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
+    # imag = imag.style.hide_index()
+    # imag.set_index('column', inplace=True)
+    # st.write(image)
+    st.table(imag.assign(hack='').set_index('hack'))
+    # from PIL import Image
+    # image = Image.open('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/csk_fixture.jpg')
+    # st.image(image, caption='Sunrise by the mountains', use_column_width=True)
+    # st.dataframe(image)
