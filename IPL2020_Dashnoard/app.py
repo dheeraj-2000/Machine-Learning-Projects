@@ -184,6 +184,51 @@ if select_bat_bowl == 'Bowling stats':
     st.subheader("Check Top 3 Best Bowlers in Selective categories")
     select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Wicket Taker', 'Best Economy Rate', 'Best Average'])
 
+######################################### !st category
+    if select_category == 'Top Wicket Taker':
+        df_bowl_top_wicket = data_bowling_stats.sort_values(by=['Wickets taken'], ascending=False).head(3)
+        x = np.arange(1, 4)
+        df_bowl_top_wicket['Position'] = x
+
+        data_bowl_stats_new = df_bowl_top_wicket[['Position', 'Player', 'Wickets taken']].head(3)
+
+        fig = px.bar(data_bowl_stats_new, x='Player', y='Wickets taken', hover_data=['Position','Player', 'Wickets taken'], color='Player')
+
+        fig.update_layout(xaxis_title="Bowlers",
+                            yaxis_title="Wickets taken so far",
+                            legend_title="Players",
+                            font=dict(
+                                family="Arial",
+                                size=16,
+                                color="RebeccaPurple"
+                            ))
+
+        fig.update_layout(title={'text': "Top 3 Most Wicket taker",
+                                    'y':0.95,
+                                    'x':0.42,
+                                    'xanchor': 'center',
+                                    'yanchor': 'top'})
+
+        st.write(fig)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 st.sidebar.title("Check Stats of Your Favourite Team")
