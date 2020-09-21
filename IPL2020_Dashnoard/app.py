@@ -182,7 +182,7 @@ if select_bat_bowl == 'Bowling stats':
         st.write(data_bowling_stats.head(20))
 
     st.subheader("Check Top 3 Best Bowlers in Selective categories")
-    select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Wicket Taker', 'Best Economy Rate', 'Best Average'])
+    select_category = st.selectbox('Choose the Performance category', ['--Select--', 'Top Wicket Taker', 'Best Economy Rate', 'Best Bowling Average'])
 
 ######################################### !st category
     if select_category == 'Top Wicket Taker':
@@ -190,9 +190,9 @@ if select_bat_bowl == 'Bowling stats':
         x = np.arange(1, 4)
         df_bowl_top_wicket['Position'] = x
 
-        data_bowl_stats_new = df_bowl_top_wicket[['Position', 'Player', 'Wickets taken']].head(3)
+        data_bowl_stats_top_wkt = df_bowl_top_wicket[['Position', 'Player', 'Wickets taken']].head(3)
 
-        fig = px.bar(data_bowl_stats_new, x='Player', y='Wickets taken', hover_data=['Position','Player', 'Wickets taken'], color='Player')
+        fig = px.bar(data_bowl_stats_top_wkt, x='Player', y='Wickets taken', hover_data=['Position','Player', 'Wickets taken'], color='Player')
 
         fig.update_layout(xaxis_title="Bowlers",
                             yaxis_title="Wickets taken so far",
@@ -211,6 +211,61 @@ if select_bat_bowl == 'Bowling stats':
 
         st.write(fig)
 
+
+    elif select_category == 'Best Economy Rate':
+            df_bowl_best_er = data_bowling_stats.sort_values(by=['Economy Rate'], ascending=True).head(3)
+            x = np.arange(1, 4)
+            df_bowl_best_er['Position'] = x
+
+            data_bowl_stats_best_er = df_bowl_best_er[['Position', 'Player', 'Economy Rate']].head(3)
+
+            fig = px.bar(data_bowl_stats_best_er, x='Player', y='Economy Rate', hover_data=['Position','Player', 'Economy Rate'], color='Player')
+
+            fig.update_layout(xaxis_title="Bowlers",
+                                yaxis_title="Economy Rate",
+                                legend_title="Players",
+                                font=dict(
+                                    family="Arial",
+                                    size=16,
+                                    color="RebeccaPurple"
+                                ))
+
+            fig.update_layout(title={'text': "Top 3 Bowlers with Best Economy rate",
+                                        'y':0.95,
+                                        'x':0.40,
+                                        'xanchor': 'center',
+                                        'yanchor': 'top'})
+
+            st.write(fig)
+
+
+
+    elif select_category == 'Best Bowling Average':
+            data_bowling_stats = data_bowling_stats[data_bowling_stats.Average != '-']
+            df_bowl_best_avg = data_bowling_stats.sort_values(by=['Average'], ascending=True).head(3)
+            x = np.arange(1, 4)
+            df_bowl_best_avg['Position'] = x
+
+            data_bowl_stats_best_avg = df_bowl_best_avg[['Position', 'Player', 'Average']].head(3)
+
+            fig = px.bar(data_bowl_stats_best_avg, x='Player', y='Average', hover_data=['Position','Player', 'Average'], color='Player', width=750)
+
+            fig.update_layout(xaxis_title="Bowlers",
+                                yaxis_title="Average",
+                                legend_title="Players",
+                                font=dict(
+                                    family="Arial",
+                                    size=16,
+                                    color="RebeccaPurple"
+                                ))
+
+            fig.update_layout(title={'text': "Top 3 Bowlers with Best Bowling Average",
+                                        'y':0.95,
+                                        'x':0.40,
+                                        'xanchor': 'center',
+                                        'yanchor': 'top'})
+
+            st.write(fig)
 
 
 
