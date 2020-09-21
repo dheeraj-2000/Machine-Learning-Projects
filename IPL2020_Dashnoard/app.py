@@ -308,14 +308,13 @@ st.sidebar.title("Which's Your Favourite Team")
 
 if st.sidebar.checkbox("Show cskfixture", False):
     # st.header("Bowling Stats of top Players")
-    image = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/csk_.csv')
+    hour = st.sidebar.slider("How many scheduled matches you want to check?", 0, 60)
+    image = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/iplschedule.csv')
     # st.image(image, use_column_width=True)
     imag= image[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     # imag = imag.style.hide_index()
     # imag.set_index('column', inplace=True)
     # st.write(image)
-    st.table(imag.assign(hack='').set_index('hack'))
-    # from PIL import Image
-    # image = Image.open('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/csk_fixture.jpg')
-    # st.image(image, caption='Sunrise by the mountains', use_column_width=True)
-    # st.dataframe(image)
+
+
+    st.table(imag.assign(hack='').set_index('hack').head(hour))
