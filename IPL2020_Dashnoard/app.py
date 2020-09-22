@@ -28,11 +28,11 @@ df_points_table = df_list_points_table[-1]
 
 
 # st.title("IPL 2020 Dashboard")
-st.markdown("<h1 style='text-align: center; color: #9C021B;'><strong>🏏 IPL 2020 Dashboard 🏏</strong></h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #9C021B;'><strong>🏏 <u>IPL 2020 Dashboard</u> 🏏</strong></h1>", unsafe_allow_html=True)
 st.markdown("_________________________________________________________________________________")
 # st.markdown("<h4 style='text-align: center; color: #9C021B;'><hr></h4>", unsafe_allow_html=True)
 
-st.markdown("<h4 style='text-align: center; color: #E07811;'><strong>You can check latest Status of IPL 2020 along with  stats of top Players</strong></h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #E07811;'>You can check latest Status of IPL 2020 along with  stats of top Players</h4>", unsafe_allow_html=True)
 
 # st.markdown("You can check latest Status of **IPL 2020** along with  stats of top Players 🏏")
 st.markdown("&nbsp")
@@ -48,7 +48,7 @@ def load_data_point_table():
 
 data_point_table = load_data_point_table()
 # st.header("Points Table of IPL 2020")
-st.markdown("<h2 style='text-align: center; color: blue;'><strong>Points Table of IPL 2020</strong></h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: blue;'><strong><u>Points Table of IPL 2020</u></strong></h2>", unsafe_allow_html=True)
 
 st.write(data_point_table)
 st.markdown("_________________________________________________________________________________")
@@ -66,7 +66,7 @@ df_batting_stat = df_list_batting_stat[-1]
 # st.markdown("&nbsp")
 # st.markdown("&nbsp")
 # st.header("Check Top Performers of Ongoing IPL Season")
-st.markdown("<h2 style='text-align: center; color: green;'><strong>Check Top Performers of Ongoing IPL Season</strong></h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: green;'><strong><u>Check Top Performers of Ongoing IPL Season</u></strong></h2>", unsafe_allow_html=True)
 
 select_bat_bowl = st.selectbox('Which stats you want to check?', ['--Select--', 'Batting stats', 'Bowling stats'])
 
