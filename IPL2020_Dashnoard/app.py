@@ -8,6 +8,16 @@ import requests
 from IPython.display import Image
 
 
+with open("/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/style.css") as f:
+    st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+
+@st.cache(persist=True)
+def giphy_path():
+    path = "https://media.giphy.com/media/rS9tqucvXWwuY/giphy.gif"
+    return path
+
+path = giphy_path()
+
 points_table_data_url = 'https://www.iplt20.com/points-table/2020'
 # most_run_data_url = 'https://www.iplt20.com/stats/2020/most-runs'
 html = requests.get(points_table_data_url).content
@@ -18,9 +28,13 @@ df_points_table = df_list_points_table[-1]
 
 
 # st.title("IPL 2020 Dashboard")
-st.markdown("<h1 style='text-align: center; color: #9C021B;'><strong>IPL 2020 Dashboard</strong></h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #9C021B;'><strong>🏏 IPL 2020 Dashboard 🏏</strong></h1>", unsafe_allow_html=True)
+st.markdown("_________________________________________________________________________________")
+# st.markdown("<h4 style='text-align: center; color: #9C021B;'><hr></h4>", unsafe_allow_html=True)
 
-st.markdown("You can check latest Status of **IPL 2020** along with various other stats of your favourite team 🏏")
+st.markdown("<h4 style='text-align: center; color: #E07811;'><strong>You can check latest Status of IPL 2020 along with  stats of top Players</strong></h4>", unsafe_allow_html=True)
+
+# st.markdown("You can check latest Status of **IPL 2020** along with  stats of top Players 🏏")
 st.markdown("&nbsp")
 # st.markdown("&nbsp")
 
@@ -37,6 +51,7 @@ data_point_table = load_data_point_table()
 st.markdown("<h2 style='text-align: center; color: blue;'><strong>Points Table of IPL 2020</strong></h2>", unsafe_allow_html=True)
 
 st.write(data_point_table)
+st.markdown("_________________________________________________________________________________")
 
 
 # Batting & Bowling stats of all team
@@ -48,7 +63,7 @@ df_batting_stat = df_list_batting_stat[-1]
 # print(df)
 
 
-st.markdown("&nbsp")
+# st.markdown("&nbsp")
 # st.markdown("&nbsp")
 # st.header("Check Top Performers of Ongoing IPL Season")
 st.markdown("<h2 style='text-align: center; color: green;'><strong>Check Top Performers of Ongoing IPL Season</strong></h2>", unsafe_allow_html=True)
@@ -72,6 +87,7 @@ if select_bat_bowl == 'Batting stats':
         st.markdown("<h3 style='text-align: center; color: #4BC401;'><strong>Batting Stats of top Players</strong></h3>", unsafe_allow_html=True)
 
         st.write(data_batting_stats.head(20))
+        st.markdown("_________________________________________________________________________________")
 
     # st.subheader("Check Top 3 Best Batsman in Selective categories")
     st.markdown("<h3 style='text-align: center; color: orangered;'><strong>Check Top 3 Best Batsman in Selective categories</strong></h3>", unsafe_allow_html=True)
@@ -104,6 +120,7 @@ if select_bat_bowl == 'Batting stats':
                                     'yanchor': 'top'})
 
         st.write(fig)
+        st.markdown("_________________________________________________________________________________")
 
     elif select_category == 'Highest Strike Rate':
         df_bat_sr = data_batting_stats.sort_values(by=['Strike Rate'], ascending=False).head(3)
@@ -131,7 +148,7 @@ if select_bat_bowl == 'Batting stats':
 
         st.write(fig2)
         st.markdown("🤔💡 * **Batting Strike rate** is measure of runs per ball. It is calculated in **%** *")
-
+        st.markdown("_________________________________________________________________________________")
 
     elif select_category == 'Best Average':
         best_avg_data_url = 'https://www.iplt20.com/stats/2020/best-batting-average'
@@ -175,7 +192,7 @@ if select_bat_bowl == 'Batting stats':
 
         st.write(fig2)
         st.markdown("🤔💡 * **Batting average** is the **total number of runs** a batsman have scored divided by the **number of times** they have been out*")
-
+        st.markdown("_________________________________________________________________________________")
 
 ##############################################################################################################################
 #####################          Bowling
@@ -204,7 +221,7 @@ if select_bat_bowl == 'Bowling stats':
         st.markdown("<h3 style='text-align: center; color: #4BC401;'><strong>Bowling Stats of top Players</strong></h3>", unsafe_allow_html=True)
 
         st.write(data_bowling_stats.head(20))
-
+        st.markdown("_________________________________________________________________________________")
     # st.subheader("Check Top 3 Best Bowlers in Selective categories")
     st.markdown("<h3 style='text-align: center; color: purple;'><strong>Check Top 3 Best Bowlers in Selective categories</strong></h3>", unsafe_allow_html=True)
 
@@ -238,7 +255,7 @@ if select_bat_bowl == 'Bowling stats':
                                     'yanchor': 'top'})
 
         st.write(fig)
-
+        st.markdown("_________________________________________________________________________________")
 
     elif select_category == 'Best Economy Rate':
             df_bowl_best_er = data_bowling_stats.sort_values(by=['Economy Rate'], ascending=True).head(3)
@@ -268,7 +285,7 @@ if select_bat_bowl == 'Bowling stats':
 
             st.write(fig)
             st.markdown("🤔💡 * **Economy rate** is the number of runs a bowler have conceded per over bowled. The **lower** the economy rate is, the **better** the bowler is performing.*")
-
+            st.markdown("_________________________________________________________________________________")
 
 
     elif select_category == 'Best Bowling Average':
@@ -301,7 +318,7 @@ if select_bat_bowl == 'Bowling stats':
 
             st.write(fig)
             st.markdown("🤔💡 * **Bowling average** is the number of runs a bowler have conceded per wicket taken. The **lower** the bowling average is, the **better** the bowler is performing*")
-
+            st.markdown("_________________________________________________________________________________")
 
 
 #########################################################################################################################################
@@ -322,12 +339,15 @@ if select_bat_bowl == 'Bowling stats':
 
 
 # st.sidebar.title("Schedule of IPL 2020")
-st.sidebar.markdown("<h1 style='text-align: center; color: #F34600;'><strong>Schedule of IPL 2020</strong></h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h1 style='text-align: center; color: #F34600;'><u><strong>Schedule of IPL 2020</strong></u></h1>", unsafe_allow_html=True)
 
-st.sidebar.markdown("You can check the scheduled matches of IPL 2020, along with various other details like timing, Venue etc.")
+# st.sidebar.markdown("You can check the scheduled matches of IPL 2020, along with various other details like timing, Venue etc.")
+st.sidebar.markdown("<h4 style='text-align: center; '>You can check all the scheduled matches of IPL 2020, along with various other details like timing, Venue etc.</h4>", unsafe_allow_html=True)
+
+st.sidebar.markdown("_________________________________________________________________________________")
 
 
-st.sidebar.markdown("&nbsp")
+# st.sidebar.markdown("&nbsp")
 # st.sidebar.markdown("&nbsp")
 # st.sidebar.subheader("Want to check all scheduled Matches?")
 st.sidebar.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong>Want to check all scheduled Matches?</strong></h2>", unsafe_allow_html=True)
@@ -335,9 +355,9 @@ st.sidebar.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong>Wan
 
 if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
+    # st.markdown("&nbsp")
     # st.header("IPL 2020 Scheduled Matches")
-    st.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong>Want to check all scheduled Matches?</strong></h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: #BD08D3;'><strong><u>All Scheduled matches of IPL 2020</u></strong></h2>", unsafe_allow_html=True)
 
     st.markdown("You can expand the view for better visibility of Time table")
     # st.header("Bowling Stats of top Players")
@@ -348,13 +368,15 @@ if st.sidebar.checkbox("Show IPL 2020 scheduled matches", False):
     # imag = imag.style.hide_index()
     # imag.set_index('column', inplace=True)
     st.write(image.head(all_match))
+    st.markdown("_________________________________________________________________________________")
 
 
     # st.table(imag.assign(hack='').set_index('hack').head(all_match))
 
-st.sidebar.markdown("&nbsp")
+# st.sidebar.markdown("&nbsp")
 # st.sidebar.markdown("&nbsp")
 # st.sidebar.subheader("Want to check scheduled Matches of your favourite team?")
+st.sidebar.markdown("_________________________________________________________________________________")
 st.sidebar.markdown("<h2 style='text-align: center; color: #5A2553;'><strong>Want to check scheduled Matches of your favourite team?</strong></h2>", unsafe_allow_html=True)
 
 
@@ -371,9 +393,13 @@ if favourite_team == 'Chennai Super Kings (CSK)':
     # imag.set_index('column', inplace=True)
     # st.write(csk)
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Chennai Super Kings full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Chennai Super Kings full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #E5EF1A;'><strong><u>Chennai Super Kings full Schedule of Matches</strong></h2>", unsafe_allow_html=True)
+
     st.table(csk.assign(hack='').set_index('hack'))
+    # st.markdown("_________________________*****___________________________")
+    st.markdown("<h2 style='text-align: center; color: #E5EF1A;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
 
 
 
@@ -382,54 +408,97 @@ elif favourite_team == 'Mumbai Indians (MI)':
     mi = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/mi_schedule.csv')
     mi= mi[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Mumbai Indians full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Mumbai Indians full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #006EC9;'><strong><u>Mumbai Indians full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
+
     st.table(mi.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #006EC9;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
 
 elif favourite_team == 'Royal Challengers Benglore (RCB)':
     rcb = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rcb_schedule.csv')
     rcb= rcb[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Royal Challengers Benglore full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Royal Challengers Benglore full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #F30922;'><strong><u>Royal Challengers Benglore full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
+
     st.table(rcb.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #F30922;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
 
 elif favourite_team == 'Sunrisers Hyderabad (SRH)':
     srh = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/srh_schedule.csv')
     srh= srh[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Sunrisers Hyderabad full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Sunrisers Hyderabad full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #F32C09;'><strong><u>Sunrisers Hyderabad full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
     st.table(srh.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #F32C09;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
+
 
 elif favourite_team == 'Delhi Capitals (DC)':
     dc = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/dc_schedule.csv')
     dc= dc[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Delhi Capitals full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Delhi Capitals full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #4403E3;'><strong><u>Delhi Capitals full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
     st.table(dc.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #4403E3;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
 
 elif favourite_team == 'Kings Eleven Punjab (KXIP)':
     punjab = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/punjab_schedule.csv')
     punjab= punjab[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("RKings Eleven Punjab full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("RKings Eleven Punjab full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #E10000;'><strong><u>Kings Eleven Punjab full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
     st.table(punjab.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #E10000;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
 
 elif favourite_team == 'Rajasthan Royals (RR)':
     rr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/rajasthan_schedule.csv')
     rr= rr[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Rajasthan Royals full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Rajasthan Royals full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #F519AC;'><strong><u>Rajasthan Royals full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
     st.table(rr.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #F519AC;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
 
 elif favourite_team == 'Kolkata knight Riders (KKR)':
     kkr = pd.read_csv('/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/kkr_schedule.csv')
     kkr= kkr[['Match No', 'Match Center', 'Date', 'Day', 'Time India (IST)', 'Venuue']]
     st.markdown("&nbsp")
-    st.markdown("&nbsp")
-    st.header("Kolkata knight Riders full Schedule of Matches")
+    # st.markdown("&nbsp")
+    # st.header("Kolkata knight Riders full Schedule of Matches")
+    st.markdown("<h2 style='text-align: center; color: #3328B3;'><strong><u>Kolkata knight Riders full Schedule of Matches</u></strong></h2>", unsafe_allow_html=True)
     st.table(kkr.assign(hack='').set_index('hack'))
+    st.markdown("<h2 style='text-align: center; color: #3328B3;'><strong><u>_____________________*****_____________________</strong></h2>", unsafe_allow_html=True)
+
+
+
+# with open("/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/style.css") as f:
+#     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+#
+# path = "https://media.giphy.com/media/rS9tqucvXWwuY/giphy.gif"
+st.markdown("&nbsp")
+st.image(path, width = 300)
+
+
+# st.write("bye world")
+# bye = '/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/bye.png'
+# st.image(bye, width=150)
+
+# st.markdown("<img src='/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/bye.png' >", unsafe_allow_html=True)
+
+# <iframe src="https://giphy.com/embed/rS9tqucvXWwuY" width="480" height="271" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/stickers/bye-rS9tqucvXWwuY">via GIPHY</a></p>
+# <img src="/home/dheeraj/my_projects/my_project_env/practice/motion_detector/IPL2020_Dashnoard/bye.png" alt="Italian Trulli">
+# st.markdown("![Alt Text](https://media.giphy.com/media/rS9tqucvXWwuY/giphy.gif)")
