@@ -1,5 +1,5 @@
 # Machine-Learning-Projects
-Projects related to ML/ DeepLearning
+Projects related to Machine Learning / Deep Learning / Data ScienceU
 
 
 
